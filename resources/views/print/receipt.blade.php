@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Comprobante de pago</title><link rel="stylesheet" href="{{ Vite::asset('resources/css/app.css') }}"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></head>
+<body class="print-page"><main class="receipt">
+    <div class="receipt-brand"><span class="brand-mark"><i class="fa-solid fa-building"></i></span><div><strong>CONDOMINIO</strong><small>CRUZ AZUL</small></div></div>
+    <div class="receipt-title"><p class="eyebrow">COMPROBANTE DE PAGO</p><h1>Recibo #{{ str_pad($payment->id, 6, '0', STR_PAD_LEFT) }}</h1><span class="badge badge-success">Pago registrado</span></div>
+    <div class="receipt-grid"><div><small>Arrendatario</small><strong>{{ $payment->arrendatario->nombre_completo }}</strong></div><div><small>CI</small><strong>{{ $payment->arrendatario->ci }}</strong></div><div><small>Departamento</small><strong>{{ $payment->arrendatario->numero_departamento }}</strong></div><div><small>Fecha de pago</small><strong>{{ $payment->fecha_pago->format('d/m/Y H:i') }}</strong></div><div><small>Concepto</small><strong>{{ $payment->concepto }}</strong></div><div><small>Método de pago</small><strong>{{ ucfirst($payment->metodo_pago) }}</strong></div><div><small>Registrado por</small><strong>{{ $payment->usuarioRegistrador?->name ?? 'Sistema' }}</strong></div><div class="receipt-total"><small>Monto recibido</small><strong>Bs {{ number_format($payment->monto, 2) }}</strong></div></div>
+    @if($payment->observacion)<p class="receipt-note"><strong>Observación:</strong> {{ $payment->observacion }}</p>@endif
+    <p class="receipt-thanks">Gracias por su pago.</p>
+    <div class="print-actions"><button class="button button-primary" type="button" onclick="window.print()"><i class="fa-solid fa-print"></i> Imprimir comprobante</button><button class="button button-secondary" type="button" onclick="history.back()">Volver</button></div>
+</main></body></html>
